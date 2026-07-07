@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Inventaris Toko</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 font-sans min-h-screen">
+
+    <div id="halamanLogin" class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
+            <div class="text-center mb-6">
+                <span class="text-4xl">🔐</span>
+                <h2 id="judulAuth" class="text-2xl font-bold text-gray-800 mt-2">Login Karyawan</h2>
+                <p id="subjudulAuth" class="text-gray-500 text-sm mt-1">Silakan masuk untuk mengelola inventaris</p>
+            </div>
+            
+            <form id="formAuth" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Username</label>
+                    <input type="text" id="usernameAuth" required placeholder="Masukkan username" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Password</label>
+                    <input type="password" id="passwordAuth" required placeholder="Masukkan password" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                </div>
+                <button type="submit" id="btnAuth" class="w-full bg-blue-600 text-white py-2 rounded font-medium hover:bg-blue-700 transition">Masuk</button>
+            </form>
+
+            <div class="text-center mt-4">
+                <button id="btnGantiMode" class="text-sm text-blue-600 hover:underline">Belum punya akun? Daftar di sini</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="halamanUtama" class="container mx-auto p-6 max-w-6xl hidden">
+        <header class="mb-8 flex flex-col sm:flex-row justify-between items-center bg-white p-4 rounded-lg shadow-sm gap-4">
+            <div class="text-center sm:text-left">
+                <h1 class="text-2xl font-bold text-gray-800">📦 Sistem Manajemen Inventaris</h1>
+                <p class="text-gray-500 text-sm">Karyawan Aktif: <span id="namaKaryawanAktif" class="font-semibold text-blue-600"></span></p>
+            </div>
+            <button id="btnLogout" class="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded font-medium text-sm transition">Keluar (Logout)</button>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700 flex items-center gap-2">➕ Tambah Jenis Barang Baru</h2>
+                <form id="formBarang" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Nama Barang</label>
+                        <input type="text" id="namaBarang" required placeholder="Contoh: Beras Pandan Wangi" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Jenis / Kategori</label>
+                        <input type="text" id="jenisBarang" required placeholder="Contoh: Sembako" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded font-medium hover:bg-blue-700 transition">Simpan Barang</button>
+                </form>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700 flex items-center gap-2">🔄 Catat Barang Masuk / Keluar</h2>
+                <form id="formTransaksi" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Pilih Barang <span id="infoStokDropdown" class="text-emerald-600 font-bold ml-1"></span></label>
+                        <select id="pilihBarang" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                            <option value="">-- Pilih Barang --</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Jenis Transaksi</label>
+                            <select id="jenisTransaksi" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                                <option value="masuk">Barang Masuk (➕)</option>
+                                <option value="keluar">Barang Keluar (➖)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Jumlah (Qty)</label>
+                            <input type="number" id="jumlahTransaksi" min="1" required placeholder="0" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Tanggal Transaksi</label>
+                        <input type="date" id="tanggalTransaksi" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded font-medium hover:bg-emerald-700 transition">Simpan Transaksi</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-md md:col-span-1">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700">📊 Stok Gudang Aktual</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-700 uppercase text-xs font-semibold">
+                                <th class="p-3 border-b">Nama Barang</th>
+                                <th class="p-3 border-b text-right">Sisa Stok</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelStok" class="text-gray-600 text-sm divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md md:col-span-2">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700">📜 Riwayat Barang Masuk & Keluar</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-700 uppercase text-xs font-semibold">
+                                <th class="p-3 border-b">Tanggal</th>
+                                <th class="p-3 border-b">Nama Barang</th>
+                                <th class="p-3 border-b">Status</th>
+                                <th class="p-3 border-b text-right">Jumlah</th>
+                                <th class="p-3 border-b text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelRiwayat" class="text-gray-600 text-sm divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
