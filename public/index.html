@@ -32,7 +32,7 @@
 
     <table id="tabelBarang">
         <tr>
-            <th>BRAND</th><th>Part Number</th><th>Barang</th><th>Stok Awal 2024</th><th>Uom</th><th>NOTE</th><th>Stok Akhir</th><th>Aksi</th>
+            <th>BRAND</th><th>Part Number</th><th>Barang</th><th>Stok Awal 2024</th><th>Uom</th><th>NOTE</th><th>Stok Akhir</th>
         </tr>
     </table>
 
@@ -48,21 +48,9 @@
             row.insertCell(3).innerHTML = stokAwal;
             row.insertCell(4).innerHTML = document.getElementById('uom').value;
             row.insertCell(5).innerHTML = document.getElementById('note').value;
-            row.insertCell(6).innerHTML = stokAwal; 
-            row.insertCell(7).innerHTML = '<button onclick="ambilBarang(this)">Ambil</button>';
+            row.insertCell(6).innerHTML = stokAwal; // Stok Akhir
 
             document.querySelectorAll('input').forEach(i => i.value = "");
-        }
-
-        function ambilBarang(btn) {
-            var row = btn.parentNode.parentNode;
-            var stokAkhirCell = row.cells[6];
-            var stok = parseInt(stokAkhirCell.innerHTML);
-            if (!isNaN(stok) && stok > 0) {
-                stokAkhirCell.innerHTML = stok - 1;
-            } else {
-                alert("Stok habis atau tidak valid!");
-            }
         }
 
         function exportExcel() {
