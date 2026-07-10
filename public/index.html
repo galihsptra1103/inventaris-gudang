@@ -12,7 +12,7 @@
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         th { background-color: #f2f2f2; }
         input { padding: 8px; margin-bottom: 10px; width: 120px; }
-        button { padding: 8px 15px; cursor: pointer; }
+        button { padding: 8px 12px; cursor: pointer; margin-right: 5px; }
     </style>
 </head>
 <body>
@@ -41,6 +41,7 @@
     </table>
 
     <script>
+        // Load data saat halaman dibuka
         window.onload = function() {
             var savedData = localStorage.getItem("dataInventaris");
             if (savedData) { document.getElementById("tabelBody").innerHTML = savedData; }
@@ -57,8 +58,9 @@
             row.insertCell(3).innerHTML = stokAwal;
             row.insertCell(4).innerHTML = document.getElementById('uom').value;
             row.insertCell(5).innerHTML = document.getElementById('note').value;
-            row.insertCell(6).innerHTML = stokAwal;
-            // Tombol fungsi ada di sini tanpa judul kolom "Aksi"
+            row.insertCell(6).innerHTML = stokAwal; 
+            
+            // Tombol Ambil dan Hapus
             row.insertCell(7).innerHTML = '<button onclick="ambilBarang(this)">Ambil</button> <button onclick="hapusBaris(this)" style="background-color: red; color: white;">Hapus</button>';
 
             simpanKeBrowser();
