@@ -2,30 +2,65 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Sistem Inventaris Gudang</title>
+    <title>Inventaris Gudang</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 8px; }
-        th { background: #eee; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
     </style>
 </head>
 <body>
-    <h2>Input Barang Baru</h2>
-    <input id="brand" placeholder="Brand">
-    <input id="part" placeholder="Part Number">
-    <input id="nama" placeholder="Nama Barang">
-    <input id="stok" type="number" placeholder="Stok Awal">
-    <input id="uom" placeholder="Uom">
-    <input id="note" placeholder="Note">
-    <button onclick="simpan()">Simpan</button>
 
-    <table>
-        <thead>
-            <tr><th>Brand</th><th>Part Number</th><th>Barang</th><th>Stok Awal</th><th>Uom</th><th>Note</th><th>Stok Akhir</th></tr>
-        </thead>
-        <tbody id="tabel-body"></tbody>
+    <h2>Input Barang Baru</h2>
+    
+    <input type="text" id="brand" placeholder="Brand">
+    <input type="text" id="part" placeholder="Part Number">
+    <input type="text" id="barang" placeholder="Barang">
+    <input type="text" id="stok" placeholder="Stok Awal">
+    <input type="text" id="uom" placeholder="Uom">
+    <input type="text" id="note" placeholder="Note">
+    <button onclick="simpanData()">Simpan</button>
+
+    <table id="tabelBarang">
+        <tr>
+            <th>Brand</th>
+            <th>Part Number</th>
+            <th>Barang</th>
+            <th>Stok Awal</th>
+            <th>Uom</th>
+            <th>Note</th>
+            <th>Stok Akhir</th>
+        </tr>
     </table>
-    <script src="app.js"></script>
+
+    <script>
+        function simpanData() {
+            // Mengambil nilai dari input
+            var brand = document.getElementById('brand').value;
+            var part = document.getElementById('part').value;
+            var barang = document.getElementById('barang').value;
+            var stok = document.getElementById('stok').value;
+            var uom = document.getElementById('uom').value;
+            var note = document.getElementById('note').value;
+            
+            // Validasi sederhana
+            if(brand == "" || barang == "") { alert("Mohon isi data!"); return; }
+
+            // Menambah baris ke tabel
+            var table = document.getElementById('tabelBarang');
+            var row = table.insertRow(-1);
+            
+            row.insertCell(0).innerHTML = brand;
+            row.insertCell(1).innerHTML = part;
+            row.insertCell(2).innerHTML = barang;
+            row.insertCell(3).innerHTML = stok;
+            row.insertCell(4).innerHTML = uom;
+            row.insertCell(5).innerHTML = note;
+            row.insertCell(6).innerHTML = stok; // Stok akhir otomatis sama dengan stok awal
+
+            // Mengosongkan input setelah simpan
+            document.querySelectorAll('input').forEach(input => input.value = "");
+        }
+    </script>
 </body>
 </html>
