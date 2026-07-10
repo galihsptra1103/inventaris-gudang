@@ -37,6 +37,14 @@
     </table>
 
     <script>
+        // Memuat data dari memori browser saat halaman dibuka
+        window.onload = function() {
+            var savedData = localStorage.getItem("dataInventaris");
+            if (savedData) {
+                document.getElementById("tabelBarang").innerHTML = savedData;
+            }
+        };
+
         function simpanData() {
             var table = document.getElementById('tabelBarang');
             var stokAwal = document.getElementById('stok').value;
@@ -49,6 +57,9 @@
             row.insertCell(4).innerHTML = document.getElementById('uom').value;
             row.insertCell(5).innerHTML = document.getElementById('note').value;
             row.insertCell(6).innerHTML = stokAwal; // Stok Akhir
+
+            // Simpan ke memori permanen
+            localStorage.setItem("dataInventaris", table.innerHTML);
 
             document.querySelectorAll('input').forEach(i => i.value = "");
         }
