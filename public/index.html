@@ -34,20 +34,16 @@
     <table id="tabelBarang">
         <thead>
             <tr>
-                <th>BRAND</th><th>Part Number</th><th>Barang</th><th>Stok Awal 2024</th><th>Uom</th><th>NOTE</th><th>Stok Akhir</th><th>Aksi</th>
+                <th>BRAND</th><th>Part Number</th><th>Barang</th><th>Stok Awal 2024</th><th>Uom</th><th>NOTE</th><th>Stok Akhir</th><th></th>
             </tr>
         </thead>
-        <tbody id="tabelBody">
-            </tbody>
+        <tbody id="tabelBody"></tbody>
     </table>
 
     <script>
-        // Load data saat halaman dibuka
         window.onload = function() {
             var savedData = localStorage.getItem("dataInventaris");
-            if (savedData) {
-                document.getElementById("tabelBody").innerHTML = savedData;
-            }
+            if (savedData) { document.getElementById("tabelBody").innerHTML = savedData; }
         };
 
         function simpanData() {
@@ -61,7 +57,8 @@
             row.insertCell(3).innerHTML = stokAwal;
             row.insertCell(4).innerHTML = document.getElementById('uom').value;
             row.insertCell(5).innerHTML = document.getElementById('note').value;
-            row.insertCell(6).innerHTML = stokAwal; 
+            row.insertCell(6).innerHTML = stokAwal;
+            // Tombol fungsi ada di sini tanpa judul kolom "Aksi"
             row.insertCell(7).innerHTML = '<button onclick="ambilBarang(this)">Ambil</button> <button onclick="hapusBaris(this)" style="background-color: red; color: white;">Hapus</button>';
 
             simpanKeBrowser();
@@ -75,9 +72,7 @@
             if (!isNaN(stok) && stok > 0) {
                 stokAkhirCell.innerHTML = stok - 1;
                 simpanKeBrowser();
-            } else {
-                alert("Stok habis!");
-            }
+            } else { alert("Stok habis!"); }
         }
 
         function hapusBaris(btn) {
