@@ -4,12 +4,31 @@
     <meta charset="UTF-8">
     <title>Inventaris Gudang</title>
     <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        
+        /* Pengaturan Logo */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .logo-perusahaan {
+            max-width: 300px; /* Ukuran logo besar */
+            height: auto;
+        }
+
+        /* Pengaturan Tabel & Form */
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         th { background-color: #f2f2f2; }
+        input { padding: 8px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
+
+    <div class="logo-container">
+        <img src="images.jpg" alt="Logo Perusahaan" class="logo-perusahaan">
+    </div>
 
     <h2>Input Barang Baru</h2>
     
@@ -35,7 +54,6 @@
 
     <script>
         function simpanData() {
-            // Mengambil nilai dari input
             var brand = document.getElementById('brand').value;
             var part = document.getElementById('part').value;
             var barang = document.getElementById('barang').value;
@@ -43,10 +61,8 @@
             var uom = document.getElementById('uom').value;
             var note = document.getElementById('note').value;
             
-            // Validasi sederhana
             if(brand == "" || barang == "") { alert("Mohon isi data!"); return; }
 
-            // Menambah baris ke tabel
             var table = document.getElementById('tabelBarang');
             var row = table.insertRow(-1);
             
@@ -56,12 +72,10 @@
             row.insertCell(3).innerHTML = stok;
             row.insertCell(4).innerHTML = uom;
             row.insertCell(5).innerHTML = note;
-            row.insertCell(6).innerHTML = stok; // Stok akhir otomatis sama dengan stok awal
+            row.insertCell(6).innerHTML = stok; 
 
-            // Mengosongkan input setelah simpan
             document.querySelectorAll('input').forEach(input => input.value = "");
         }
     </script>
 </body>
-<img src="images.jpg" alt="Logo Perusahaan" style="width: 150px;">
 </html>
