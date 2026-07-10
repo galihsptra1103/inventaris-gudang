@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Inventaris Gudang</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
         .logo-container { display: flex; justify-content: center; margin-bottom: 20px; }
@@ -10,12 +11,15 @@
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         th { background-color: #f2f2f2; }
+        input { padding: 8px; margin-bottom: 10px; width: 120px; }
     </style>
 </head>
 <body>
+
     <div class="logo-container">
         <img src="images.jpg" alt="Logo Perusahaan" class="logo-perusahaan">
     </div>
+
     <h2>Input Barang Baru</h2>
     <input type="text" id="brand" placeholder="Brand">
     <input type="text" id="part" placeholder="Part Number">
@@ -24,21 +28,47 @@
     <input type="text" id="uom" placeholder="Uom">
     <input type="text" id="note" placeholder="Note">
     <button onclick="simpanData()">Simpan</button>
+    <button onclick="exportExcel()" style="background-color: green; color: white;">Export Excel</button>
+
     <table id="tabelBarang">
-        <tr><th>Brand</th><th>Part Number</th><th>Barang</th><th>Stok Awal</th><th>Uom</th><th>Note</th><th>Stok Akhir</th></tr>
+        <tr>
+            <th>Brand</th><th>Part Number</th><th>Barang</th><th>Stok Awal</th><th>Uom</th><th>Note</th><th>Stok Akhir</th><th>Aksi</th>
+        </tr>
     </table>
+
     <script>
         function simpanData() {
             var table = document.getElementById('tabelBarang');
+            var stokAwal = document.getElementById('stok').value;
             var row = table.insertRow(-1);
+            
             row.insertCell(0).innerHTML = document.getElementById('brand').value;
             row.insertCell(1).innerHTML = document.getElementById('part').value;
             row.insertCell(2).innerHTML = document.getElementById('barang').value;
-            row.insertCell(3).innerHTML = document.getElementById('stok').value;
+            row.insertCell(3).innerHTML = stokAwal;
             row.insertCell(4).innerHTML = document.getElementById('uom').value;
             row.insertCell(5).innerHTML = document.getElementById('note').value;
-            row.insertCell(6).innerHTML = document.getElementById('stok').value;
+            row.insertCell(6).innerHTML = stokAwal; // Stok Akhir
+            row.insertCell(7).innerHTML = '<button onclick="ambilBarang(this)">Ambil</button>';
+
             document.querySelectorAll('input').forEach(i => i.value = "");
+        }
+
+        function ambilBarang(btn) {
+            var row = btn.parentNode.parentNode;
+            var stokAkhirCell = row.cells[6];
+            var stok = parseInt(stokAkhirCell.innerHTML);
+            if (stok > 0) {
+                stokAkhirCell.innerHTML = stok - 1;
+            } else {
+                alert("Stok habis!");
+            }
+        }
+
+        function exportExcel() {
+            var table = document.getElementById("tabelBarang");
+            var wb = XLSX.utils.table_to_book(table, {sheet:"Inventaris"});
+            XLSX.writeFile(wb, "Data_Inventaris.xlsx");
         }
     </script>
 </body>
